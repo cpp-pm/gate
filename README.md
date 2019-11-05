@@ -27,8 +27,8 @@ If a `CMAKE_TOOLCHAIN_FILE` was used during compilation, it will be included in 
 Setting up Hunter, and adding a package list is as easy as:
 
 ```cmake
-# FetchContent is available since CMake version 3.11
-cmake_minimum_required(VERSION 3.11)
+# FetchContent_MakeAvailable is available since CMake version 3.14
+cmake_minimum_required(VERSION 3.14)
 
 # Setting up dlib as an external package
 set(HUNTER_PACKAGES dlib)
@@ -83,7 +83,7 @@ This allows building the 3rd party packages separate than the user projects, and
 `find_package` with no usage of Hunter at all.
 
 ```cmake
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.14)
 
 set(HUNTER_PACKAGES freetype ZLIB PNG double-conversion pcre2)
 
