@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.2)
 
-include("cmake/HunterGate.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/cmake/HunterGate.cmake")
 
 if (NOT HUNTER_URL AND NOT HUNTER_SHA1)
   file(
