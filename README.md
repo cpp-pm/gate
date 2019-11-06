@@ -77,6 +77,46 @@ FetchContent_Declare(SetupHunter GIT_REPOSITORY https://github.com/cpp-pm/gate)
 FetchContent_MakeAvailable(SetupHunter)
 ```
 
+## Usage without modifying existing CMake code
+
+With CMake 3.15 it is possible to inject CMake code before or after the `project` function call,
+this way we can have a `SetupHunter.cmake` which will configure the 3rd party packages for the
+project.
+
+Give the following CMake code:
+```cmake
+cmake_minimum_required(VERSION 3.15)
+
+project(ZLIBTest)
+
+find_package(ZLIB REQUIRED)
+
+add_executable(main main.c)
+target_link_libraries(main PRIVATE ZLIB::ZLIB)
+```
+
+Notice that we do not have the `CONFIG` or `NO_MODULE` argument to `find_package`.
+We can have a `SetupHunter.cmake` file like this:
+
+```cmake
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
+
+set(HUNTER_PACKAGES ZLIB)
+
+include(FetchContent)
+FetchContent_Declare(SetupHunter GIT_REPOSITORY https://github.com/cpp-pm/gate)
+FetchContent_MakeAvailable(SetupHunter)
+```
+
+And then configuring the `ZLIBTest` project like:
+```
+cmake -GNinja -DCMAKE_PROJECT_INCLUDE_BEFORE=[%cd%|$PWD]/SetupHunter.cmake -S . -B build
+```
+
+By using CMake 3.15's [CMAKE_FIND_PACKAGE_PREFER_CONFIG](https://cmake.org/cmake/help/v3.15/variable/CMAKE_FIND_PACKAGE_PREFER_CONFIG.html),
+and [CMAKE_PROJECT_INCLUDE_BEFORE](https://cmake.org/cmake/help/v3.15/variable/CMAKE_PROJECT_INCLUDE_BEFORE.html) we can make
+sure that the Hunter 3rd party packages are built, and used in a non-intrusive manner.
+
 ## Usage with HunterToolchain.cmake
 
 This allows building the 3rd party packages separate than the user projects, and simply use CMake's
