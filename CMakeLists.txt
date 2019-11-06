@@ -4,8 +4,6 @@
 
 cmake_minimum_required(VERSION 3.2)
 
-include("${CMAKE_CURRENT_LIST_DIR}/cmake/HunterGate.cmake")
-
 if (NOT HUNTER_URL AND NOT HUNTER_SHA1)
   file(
     DOWNLOAD https://api.github.com/repos/cpp-pm/hunter/releases/latest
@@ -66,7 +64,7 @@ endif()
 
 file(WRITE
   ${CMAKE_BINARY_DIR}/HunterSetup.cmake.in
-  "include(${CMAKE_BINARY_DIR}/HunterGate.cmake)\n"
+  "include(\"${CMAKE_CURRENT_LIST_DIR}/cmake/HunterGate.cmake\")\n"
   "HunterGate(
     URL ${HUNTER_URL}
     SHA1 ${HUNTER_SHA1}
