@@ -1,5 +1,5 @@
 # Copyright (c) 2013-2014, Ruslan Baratov
-# Copyright (c) 2019 Cristian Adam
+# Copyright (c) 2019-2020 Cristian Adam
 # All rights reserved.
 
 cmake_minimum_required(VERSION 3.2)
@@ -148,8 +148,16 @@ if (ORIGINAL_TOOLCHAIN_FILE)
 endif()
 
 #
-# Make sure the parent find_package calls work as expected
+# Make sure the parent find_package and include calls work as expected
 #
 
-set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} PARENT_SCOPE)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} PARENT_SCOPE)
+set(CMAKE_FIND_ROOT_PATH "${CMAKE_FIND_ROOT_PATH}" PARENT_SCOPE)
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}" PARENT_SCOPE)
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" PARENT_SCOPE)
+
+#
+# Variables expected to be found in global scope
+#
+set(HUNTER_ID_PATH "${HUNTER_ID_PATH}" PARENT_SCOPE)
+set(HUNTER_TOOLCHAIN_ID_PATH "${HUNTER_TOOLCHAIN_ID_PATH}" PARENT_SCOPE)
+set(HUNTER_CONFIG_ID_PATH "${HUNTER_CONFIG_ID_PATH}" PARENT_SCOPE)
