@@ -117,6 +117,11 @@ if (CMAKE_TOOLCHAIN_FILE)
     "include(\"${CMAKE_TOOLCHAIN_FILE}\")\n")
 endif()
 
+if (CMAKE_POSITION_INDEPENDENT_CODE)
+  file(APPEND ${CMAKE_BINARY_DIR}/HunterToolchain.cmake.in
+    "set(CMAKE_POSITION_INDEPENDENT_CODE ON)\n")
+endif()
+
 configure_file(
   ${CMAKE_BINARY_DIR}/HunterToolchain.cmake.in
   ${CMAKE_BINARY_DIR}/HunterToolchain.cmake @ONLY)
