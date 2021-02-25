@@ -59,8 +59,9 @@ include(CMakeParseArguments) # cmake_parse_arguments
 option(HUNTER_STATUS_PRINT "Print working status" ON)
 option(HUNTER_STATUS_DEBUG "Print a lot info" OFF)
 option(HUNTER_TLS_VERIFY "Enable/disable TLS certificate checking on downloads" ON)
+set(HUNTER_ROOT "" CACHE FILEPATH "Override the HUNTER_ROOT.")
 
-set(HUNTER_ERROR_PAGE "https://docs.hunter.sh/en/latest/reference/errors")
+set(HUNTER_ERROR_PAGE "https://hunter.readthedocs.io/en/latest/reference/errors")
 
 function(hunter_gate_status_print)
   if(HUNTER_STATUS_PRINT OR HUNTER_STATUS_DEBUG)
@@ -148,24 +149,21 @@ endfunction()
 # Set HUNTER_GATE_ROOT cmake variable to suitable value.
 function(hunter_gate_detect_root)
   # Check CMake variable
-  string(COMPARE NOTEQUAL "${HUNTER_ROOT}" "" not_empty)
-  if(not_empty)
+  if(HUNTER_ROOT)
     set(HUNTER_GATE_ROOT "${HUNTER_ROOT}" PARENT_SCOPE)
     hunter_gate_status_debug("HUNTER_ROOT detected by cmake variable")
     return()
   endif()
 
   # Check environment variable
-  string(COMPARE NOTEQUAL "$ENV{HUNTER_ROOT}" "" not_empty)
-  if(not_empty)
+  if(DEFINED ENV{HUNTER_ROOT})
     set(HUNTER_GATE_ROOT "$ENV{HUNTER_ROOT}" PARENT_SCOPE)
     hunter_gate_status_debug("HUNTER_ROOT detected by environment variable")
     return()
   endif()
 
   # Check HOME environment variable
-  string(COMPARE NOTEQUAL "$ENV{HOME}" "" result)
-  if(result)
+  if(DEFINED ENV{HOME})
     set(HUNTER_GATE_ROOT "$ENV{HOME}/.hunter" PARENT_SCOPE)
     hunter_gate_status_debug("HUNTER_ROOT set using HOME environment variable")
     return()
@@ -173,8 +171,7 @@ function(hunter_gate_detect_root)
 
   # Check SYSTEMDRIVE and USERPROFILE environment variable (windows only)
   if(WIN32)
-    string(COMPARE NOTEQUAL "$ENV{SYSTEMDRIVE}" "" result)
-    if(result)
+    if(DEFINED ENV{SYSTEMDRIVE})
       set(HUNTER_GATE_ROOT "$ENV{SYSTEMDRIVE}/.hunter" PARENT_SCOPE)
       hunter_gate_status_debug(
           "HUNTER_ROOT set using SYSTEMDRIVE environment variable"
@@ -182,8 +179,7 @@ function(hunter_gate_detect_root)
       return()
     endif()
 
-    string(COMPARE NOTEQUAL "$ENV{USERPROFILE}" "" result)
-    if(result)
+    if(DEFINED ENV{USERPROFILE})
       set(HUNTER_GATE_ROOT "$ENV{USERPROFILE}/.hunter" PARENT_SCOPE)
       hunter_gate_status_debug(
           "HUNTER_ROOT set using USERPROFILE environment variable"
