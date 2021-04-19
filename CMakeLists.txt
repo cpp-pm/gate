@@ -66,9 +66,9 @@ file(WRITE
   ${CMAKE_BINARY_DIR}/HunterSetup.cmake.in
   "include(\"${CMAKE_CURRENT_LIST_DIR}/cmake/HunterGate.cmake\")\n"
   "HunterGate(
-    URL ${HUNTER_URL}
+    URL \"${HUNTER_URL}\"
     SHA1 ${HUNTER_SHA1}
-    ${HUNTER_GATE_CONFIG}
+    \"${HUNTER_GATE_CONFIG}\"
    )\n"
 )
 
