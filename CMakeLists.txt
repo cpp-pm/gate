@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2020 Cristian Adam
 # All rights reserved.
 
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.5)
 
 if (NOT HUNTER_URL AND NOT HUNTER_SHA1)
   file(
