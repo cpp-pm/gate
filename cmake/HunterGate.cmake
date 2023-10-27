@@ -254,6 +254,12 @@ function(hunter_gate_download dir)
       WRITE
       "${cmakelists}"
       "cmake_minimum_required(VERSION 3.5)\n"
+      "if(POLICY CMP0114)\n"
+      "  cmake_policy(SET CMP0114 NEW)\n"
+      "endif()\n"
+      "if(POLICY CMP0135)\n"
+      "  cmake_policy(SET CMP0135 NEW)\n"
+      "endif()\n"
       "project(HunterDownload LANGUAGES NONE)\n"
       "include(ExternalProject)\n"
       "ExternalProject_Add(\n"
