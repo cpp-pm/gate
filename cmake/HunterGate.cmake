@@ -39,8 +39,8 @@
 #     hunter_add_package(Boo COMPONENTS Bar Baz)
 #
 # Projects:
-#     * https://github.com/hunter-packages/gate/
-#     * https://github.com/ruslo/hunter
+#     * https://github.com/cpp-pm/gate/
+#     * https://github.com/cpp-pm/hunter
 
 option(HUNTER_ENABLED "Enable Hunter package manager support" ON)
 
